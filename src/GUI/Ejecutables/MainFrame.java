@@ -29,12 +29,12 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();        
     //Inicializar tamaño de Jpanels
-    menuprincipal_jpanel.setSize(1920, 1800);
-    gestionempleado_jpanel.setSize(1920, 1800);
-    gestioncliente_jpanel.setSize(1920, 1800);
-    gestionvehiculo_jpanel.setSize(1920, 1800);
-    gestioncontrato_jpanel.setSize(1920, 1800);
-    gestionreserva_jpanel.setSize(1920, 1800);
+    menuprincipal_jpanel.setSize(1000, 600);
+    gestionempleado_jpanel.setSize(1000, 600);
+    gestioncliente_jpanel.setSize(1000, 600);
+    gestionvehiculo_jpanel.setSize(1000, 600);
+    gestioncontrato_jpanel.setSize(1000, 600);
+    gestionreserva_jpanel.setSize(1000, 600);
     
     //Inicio por default
         add(menuprincipal_jpanel);
@@ -45,18 +45,19 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1800));
-        setSize(new java.awt.Dimension(1920, 1800));
+        setMaximumSize(new java.awt.Dimension(1000, 600));
+        setMinimumSize(new java.awt.Dimension(1000, 600));
+        setSize(new java.awt.Dimension(1000, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1520, Short.MAX_VALUE)
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1500, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         pack();
