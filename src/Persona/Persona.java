@@ -11,7 +11,7 @@ import java.time.LocalDate;
  *
  * @author nazar
  */
-public class Persona {
+public abstract class Persona {
     private String cedula;
     private String nombre;
     private LocalDate fechaNacimiento;
@@ -43,16 +43,40 @@ public class Persona {
     }
 
     public void setTelefono(String telefono) {
-        if(telefono.matches("^\\d{8}$")){
-          this.telefono = telefono;
+       if (telefono == null || !telefono.matches("^\\d{8}$")) {
+            throw new IllegalArgumentException("Teléfono inválido, Debe tener 8 dígitos");
         }
-       
+        this.telefono = telefono;
     }
      public void setCorreo(String correo) {
         if (correo == null || !correo.matches("^[\\w+.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
          this.correo = correo;
         }
        }
+     
+     //validacines D.
+
+    public void setCedula(String cedula) {
+       if (cedula == null || !cedula.matches("\\d{9}")) { 
+            throw new IllegalArgumentException("Cédula inválida. Debe tener 9 dígitos.");
+        }
+        this.cedula = cedula;
+    }
+
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío.");
+        }
+        this.nombre = nombre.trim();
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+       if (fechaNacimiento == null || fechaNacimiento.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Fecha de nacimiento inválida.");
+        }
+        this.fechaNacimiento = fechaNacimiento;
+    }
+     
 
     public Persona(String cedula, String nombre, LocalDate fechaNacimiento, String telefono, String correo) {
         this.cedula = cedula;
