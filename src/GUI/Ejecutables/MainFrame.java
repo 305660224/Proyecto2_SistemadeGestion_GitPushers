@@ -1,10 +1,5 @@
 
 package GUI.Ejecutables;
-import GUI.Ejecutables.Clientes.GestionClientes;
-import GUI.Ejecutables.Empleados.GestionEmpleados;
-import GUI.Ejecutables.Vehiculos.GestionVehiculos;
-import GUI.Ejecutables.Contratos.GestionContratos;
-import GUI.Ejecutables.Reservas.GestionReservas;
 
 /**
  * 11/08/2025
@@ -47,7 +42,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 600));
         setMinimumSize(new java.awt.Dimension(1000, 600));
-        setPreferredSize(new java.awt.Dimension(1000, 600));
         setSize(new java.awt.Dimension(1000, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

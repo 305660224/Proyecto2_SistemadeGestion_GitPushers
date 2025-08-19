@@ -1,5 +1,7 @@
+package GUI.Ejecutables;
 
-package GUI.Ejecutables.Clientes;
+
+
 
 import GUI.Ejecutables.*;
 

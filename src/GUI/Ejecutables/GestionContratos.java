@@ -1,5 +1,7 @@
+package GUI.Ejecutables;
 
-package GUI.Ejecutables.Vehiculos;
+
+
 
 import GUI.Ejecutables.*;
 
@@ -7,9 +9,9 @@ import GUI.Ejecutables.*;
  *
  * @author denis
  */
-public class GestionVehiculos extends javax.swing.JPanel {
+public class GestionContratos extends javax.swing.JPanel {
 
-    public GestionVehiculos() {
+    public GestionContratos() {
         initComponents();
     }
 
