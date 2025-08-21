@@ -16,13 +16,13 @@ import java.time.Period;
  * @author duvan
  */
 public class Reservas {
+
     private int idReserva;
     private Cliente cliente;
     private Vehiculo vehiculo;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
-    
-    
+
     public int getIdReserva() {
         return idReserva;
     }
@@ -54,30 +54,29 @@ public class Reservas {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
-    
-    /*
-    public boolean verf_Cedula(){
-        
+
+    public boolean verf_Cedula() {
+        //Cuando este Lista de Clientes
     }
-    */
-    public boolean verf_Vehiculo(VehiculosHashMap VehiculosLista){
-       return vehiculo.equals(VehiculosLista.buscar(vehiculo.getPlaca()));
-        
+
+    public boolean verf_Vehiculo(VehiculosHashMap VehiculosLista) {
+        return vehiculo.equals(VehiculosLista.buscar(vehiculo.getPlaca()));
+
     }
-    
-    public boolean NoMenorHoy(){
+
+    public boolean NoMenorHoy() {
         return fechaInicio.isBefore(LocalDate.now());
     }
-    
-    public boolean FinNoAntesInicio(){
+
+    public boolean FinNoAntesInicio() {
         return fechaFin.isBefore(fechaInicio);
     }
-    
-    public boolean NoMas30Dias(){
-        return 30<Period.between(fechaInicio, fechaFin).getDays();
+
+    public boolean NoMas30Dias() {
+        return 30 < Period.between(fechaInicio, fechaFin).getDays();
     }
-    
-    public boolean ValidarDispoVehiculo(){
+
+    public boolean ValidarDispoVehiculo() {
         return vehiculo.getEstado() == Estado.DISPONIBLE;
     }
 }

@@ -4,6 +4,7 @@
  */
 package Gestion_Reservas;
 
+import Clientes.Cliente;
 import Lists.List;
 import Logico.Vehiculos.Vehiculo;
 import Utils.UtilsFecha;
@@ -47,32 +48,42 @@ public class GestionReserva implements List<Reservas> {
         }
         return null;
     }
-    
-    public Reservas buscarFechas(LocalDate FechaIniBuscar, LocalDate FechaFinBuscar){
-        for(Reservas reservaBusFecha:Reserva){
-            if(reservaBusFecha.getFechaInicio()){
-                
+
+    public Reservas buscarXFechas(LocalDate FechaIniBuscar, LocalDate FechaFinBuscar) {
+        for (Reservas reservaBusFecha : Reserva) {
+            if (reservaBusFecha.getFechaInicio() == FechaIniBuscar && reservaBusFecha.getFechaFin() == FechaFinBuscar) {
+                return reservaBusFecha;
             }
         }
+        return null;
     }
-    
+
+    public Reservas buscarXCliente(Cliente cliente) {
+        for (Reservas reservaBusCliente : Reserva) {
+            if (reservaBusCliente.getCliente() == cliente) {
+                return reservaBusCliente;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void showAll() {
 
     }
-    
+
     //Se modifica con el numero de id de reserva que se va a cambiar y el vehiculo que se va a cambiar
-    public boolean Modificar(int ReservaModificada,Vehiculo NuevoVehiculo){
-        for(Reservas Modificar : Reserva ){
-            if(Modificar.getIdReserva()== ReservaModificada){
+    public boolean Modificar(int ReservaModificada, Vehiculo NuevoVehiculo) {
+        for (Reservas Modificar : Reserva) {
+            if (Modificar.getIdReserva() == ReservaModificada) {
                 Modificar.setVehiculo(NuevoVehiculo);
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean NoReservaActiva(Reservas reserva1) {
+
+    public boolean NoReservaActiva(Reservas reserva1) {//Es para ver si no se entrelazan esas fechas y meter la reserva si la fecha no se entrelazan
         for (Reservas reserva2 : Reserva) {
             if (UtilsFecha.CalcularEntreFechas(reserva1.getFechaInicio(), reserva1.getFechaFin(), reserva2.getFechaInicio(), reserva2.getFechaFin())) {
                 return true;
@@ -81,4 +92,16 @@ public class GestionReserva implements List<Reservas> {
         return false;
     }
 
+    public boolean CancelarReserva(Reservas cancelarReser) {
+        if (buscar(cancelarReser) == cancelarReser) {
+            if (cancelarReser.getFechaInicio().isAfter(LocalDate.now())) {
+                remover(cancelarReser);
+            }
+        }
+        return false;
+    }
+
+    public boolean ConfirmarReserva() {
+        //Cuando este Contratos de Alquiler(creo)
+    }
 }
