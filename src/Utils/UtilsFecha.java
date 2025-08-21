@@ -13,23 +13,28 @@ import java.time.format.DateTimeFormatter;
  * @author nazar
  */
 public class UtilsFecha {
-        public static int calcularEdad(LocalDate fecha){
+
+    public static int calcularEdad(LocalDate fecha) {
         return Period.between(fecha, LocalDate.now()).getYears();
     }
-    
-    public static boolean NoFechaFutura(LocalDate fecha){
+
+    public static boolean NoFechaFutura(LocalDate fecha) {
         return !fecha.isAfter(LocalDate.now());
     }
-    
-    public static boolean esMayordeEdad(LocalDate fecha){
-        return calcularEdad(fecha)>=18;
+
+    public static boolean esMayordeEdad(LocalDate fecha) {
+        return calcularEdad(fecha) >= 18;
     }
-    
-    public static LocalDate toLocalDate(String fecha){
+
+    public static LocalDate toLocalDate(String fecha) {
         return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
-    
-    public static String toString(LocalDate fecha){
+
+    public static String toString(LocalDate fecha) {
         return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public static boolean CalcularEntreFechas(LocalDate fechaIni1, LocalDate fechaFin1, LocalDate fechaIni2, LocalDate fechaFin2) {
+        return fechaIni1.isBefore(fechaFin2) && fechaIni2.isBefore(fechaFin1);
     }
 }
