@@ -21,5 +21,11 @@ public class Cliente extends Persona{
         super(cedula, nombre, fechaNacimiento, telefono, correo);
         this.licencia = licencia;
     }
+
+    public void setLicencia(Tipo_licencia_Enum licencia) {
+        this.licencia = licencia;
+    }
+
+    
     
 }
