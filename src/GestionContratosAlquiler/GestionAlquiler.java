@@ -25,27 +25,27 @@ public class GestionAlquiler implements List<Alquiler> {
 
     @Override
     public boolean añadir(Alquiler t) {
-        if (alquiler == null) {
+        if (t == null) {
             return false;
         }
 
         // Verificar que no exista otro con el mismo número de alquiler
         for (Alquiler a : listaAlquileres) {
-            if (a.getNumeroAlquiler().equalsIgnoreCase(alquiler.getNumeroAlquiler())) {
+            if (a.getNumeroAlquiler().equalsIgnoreCase(t.getNumeroAlquiler())) {
                 return false;
             }
         }
 
-        listaAlquileres.add(alquiler);
+        listaAlquileres.add(t);
         return true;
     }
 
     @Override
     public boolean remover(Alquiler t) {
-        if (alquiler == null) {
+        if (t == null) {
             return false;
         }
-        return listaAlquileres.remove(alquiler);
+        return listaAlquileres.remove(t);
     }
 
     @Override

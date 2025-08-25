@@ -26,27 +26,27 @@ public class GestorEmpleados implements List<Empleado> {
 
     @Override
     public boolean añadir(Empleado t) {
-        if (empleado == null) {
+        if (t == null) {
             return false;
         }
 
         // Validar que no exista otro con la misma cédula
         for (Empleado emp : listaEmpleados) {
-            if (emp.getCedula().equalsIgnoreCase(empleado.getCedula())) {
+            if (emp.getCedula().equalsIgnoreCase(t.getCedula())) {
                 return false; // Ya existe
             }
         }
 
-        listaEmpleados.add(empleado);
+        listaEmpleados.add(t);
         return true;
     }
 
     @Override
     public boolean remover(Empleado t) {
-        if (empleado == null) {
+        if (t == null) {
             return false;
         }
-        return listaEmpleados.remove(empleado);
+        return listaEmpleados.remove(t);
     }
 
     @Override
