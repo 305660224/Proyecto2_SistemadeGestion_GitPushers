@@ -12,11 +12,12 @@ import java.time.LocalDate;
  * @author nazar
  */
 public abstract class Persona {
+
     private String cedula;
     private String nombre;
     private LocalDate fechaNacimiento;
-    private String telefono ;
-    private String correo ;
+    private String telefono;
+    private String correo;
 
     public String getCedula() {
         return cedula;
@@ -27,13 +28,13 @@ public abstract class Persona {
     }
 
     public LocalDate getFechaNacimiento() {
-        return  fechaNacimiento;
+        return fechaNacimiento;
     }
-    
-    public int getEdad(){
+
+    public int getEdad() {
         return UtilsFecha.calcularEdad(fechaNacimiento);
     }
-    
+
     public String getTelefono() {
         return telefono;
     }
@@ -43,21 +44,21 @@ public abstract class Persona {
     }
 
     public void setTelefono(String telefono) {
-       if (telefono == null || !telefono.matches("^\\d{8}$")) {
+        if (telefono == null || !telefono.matches("^\\d{8}$")) {
             throw new IllegalArgumentException("Teléfono inválido, Debe tener 8 dígitos");
         }
         this.telefono = telefono;
     }
-     public void setCorreo(String correo) {
-        if (correo == null || !correo.matches("^[\\w+.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-         this.correo = correo;
-        }
-       }
-     
-     //validacines D.
 
+    public void setCorreo(String correo) {
+        if (correo == null || !correo.matches("^[\\w+.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            this.correo = correo;
+        }
+    }
+
+    //validacines D.
     public void setCedula(String cedula) {
-       if (cedula == null || !cedula.matches("\\d{9}")) { 
+        if (cedula == null || !cedula.matches("\\d{9}")) {
             throw new IllegalArgumentException("Cédula inválida. Debe tener 9 dígitos.");
         }
         this.cedula = cedula;
@@ -70,13 +71,7 @@ public abstract class Persona {
         this.nombre = nombre.trim();
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-       if (fechaNacimiento == null || fechaNacimiento.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Fecha de nacimiento inválida.");
-        }
-        this.fechaNacimiento = fechaNacimiento;
-    }
-     
+
 
     public Persona(String cedula, String nombre, LocalDate fechaNacimiento, String telefono, String correo) {
         this.cedula = cedula;
@@ -85,9 +80,5 @@ public abstract class Persona {
         this.telefono = telefono;
         this.correo = correo;
     }
-     
-     
-     
-     
-     
+
 }
