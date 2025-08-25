@@ -51,7 +51,6 @@ public class Alquiler {
         return tarifaDiaria * dias;
     }
     
-      // Finalizar alquiler
     public void finalizar() {
         if (estado != Estado.ALQUILADO  ) {
             throw new IllegalStateException("Solo un alquiler activo puede finalizarse.");
