@@ -4,96 +4,72 @@
  */
 package GestiónEmpleados;
 
+import Lists.List;
 import java.util.ArrayList;
-
-import java.util.Optional;
 
 /**
  *
  * @author danny
  */
-public class GestorEmpleados {
+public class GestorEmpleados implements List<Empleado> {
 
-    private ArrayList<Empleado> listaEmpleados;
+    ArrayList<Empleado> listaEmpleados = new ArrayList<>();
 
     public GestorEmpleados() {
-
-        listaEmpleados = new ArrayList<>();
+        this.listaEmpleados = new ArrayList<>();
     }
 
-    // Agregar empleado
-    public boolean agregarEmpleado(Empleado empleado) {
+    public ArrayList<Empleado> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+
+    @Override
+    public boolean añadir(Empleado t) {
         if (empleado == null) {
             return false;
         }
 
-        if (listaEmpleados == null) {
-            listaEmpleados = new ArrayList<>();
-        }
-
         // Validar que no exista otro con la misma cédula
-        if (existeEmpleado(empleado.getCedula())) {
-            return false;
+        for (Empleado emp : listaEmpleados) {
+            if (emp.getCedula().equalsIgnoreCase(empleado.getCedula())) {
+                return false; // Ya existe
+            }
         }
 
         listaEmpleados.add(empleado);
         return true;
     }
 
-      // Actualizar teléfono, correo y puesto
-    public boolean actualizarEmpleado(String cedula, String nuevoTelefono, String nuevoCorreo, String nuevoPuesto) {
-        if (listaEmpleados == null) return false;
-
-        Optional<Empleado> empleadoOpt = buscarPorCedula(cedula);
-        if (empleadoOpt.isEmpty()) {
+    @Override
+    public boolean remover(Empleado t) {
+        if (empleado == null) {
             return false;
         }
+        return listaEmpleados.remove(empleado);
+    }
 
-        Empleado emp = empleadoOpt.get();
-
-        try {
-            if (nuevoTelefono != null && !nuevoTelefono.isEmpty()) {
-                emp.setTelefono(nuevoTelefono);
+    @Override
+    public Empleado buscar(Object id) {
+        if (id instanceof String cedula) {
+            for (Empleado emp : listaEmpleados) {
+                if (emp.getCedula().equalsIgnoreCase(cedula)) {
+                    return emp;
+                }
             }
-
-            if (nuevoCorreo != null && !nuevoCorreo.isEmpty()) {
-                emp.setCorreo(nuevoCorreo);
-            }
-
-            if (nuevoPuesto != null && !nuevoPuesto.trim().isEmpty()) {
-                emp.setPuesto(nuevoPuesto);
-            }
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error al actualizar empleado: " + e.getMessage());
-            return false;
         }
-
-        return true;
+        return null;
     }
 
-    // Eliminar empleado // sin mods
-    public boolean eliminarEmpleado(String cedula) {
-        Optional<Empleado> empleadoOpt = buscarPorCedula(cedula);
-        if (empleadoOpt.isEmpty()) {
-            return false;
+    @Override
+    public void showAll() {
+        if (listaEmpleados.isEmpty()) {
+            System.out.println("No hay empleados registrados.");
+            return;
         }
-
-        listaEmpleados.remove(empleadoOpt.get());
-        return true;
+        for (Empleado emp : listaEmpleados) {
+            System.out.println(emp);
+        }
     }
 
-    public Optional<Empleado> buscarPorCedula(String cedula) {
-        return listaEmpleados.stream().filter(emp -> emp.getCedula().equalsIgnoreCase(cedula)).findFirst();
-
-    }
-
-    public boolean existeEmpleado(String cedula) {
-        return buscarPorCedula(cedula).isPresent();
-    }
-
-    // por si se necesita en la GUI
-    public ArrayList<Empleado> getListaEmpleados() {
-        return listaEmpleados;
-    }
 }
