@@ -25,7 +25,7 @@ public class Alquiler {
     private double monto;
     private Estado estado;
 
-    public Alquiler(String numeroAlquiler, Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin, double monto) {
+    public Alquiler(String numeroAlquiler, Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin, double tarifaDiaria) { // para solucionar el error lo que hice fue cambiar de parametro monto a por tarifaDiaria asi el error se va   
       if (!UtilsFecha.NoFechaFutura(fechaInicio)) {
             throw new IllegalArgumentException("La fecha de inicio no puede estar en el pasado.");
         }
@@ -37,7 +37,7 @@ public class Alquiler {
         this.vehiculo = vehiculo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.monto = calcularMonto(tarifaDiaria);// nose el pq diablos me tira la senal de q hay algo mal .-. 
+        this.monto = calcularMonto(tarifaDiaria);   // nose el pq diablos me tira la senal de q hay algo mal .-. 
         this.estado = Estado.ALQUILADO;
         this.vehiculo.setEstado(Estado.ALQUILADO);
       
