@@ -1,6 +1,7 @@
 
 package Logico.Vehiculos;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * 18/08/2125
@@ -15,8 +16,8 @@ public class VehiculosHashMap {
     }
 
     //CONTRUCTOR
-    public VehiculosHashMap(HashMap<String, Vehiculo> hashmap) {
-        this.hashmap = hashmap;
+    public VehiculosHashMap() {
+        this.hashmap = new HashMap<>();
     }
     
     public Vehiculo buscar(String placa){  
@@ -24,10 +25,11 @@ public class VehiculosHashMap {
     }
     
     public boolean anadir(Vehiculo v) {
-        if(hashmap.containsKey(v.getPlaca())) 
-            return false;
+        if(hashmap.containsKey(v.getPlaca())) return false;
+        System.out.println(v.toString());
         hashmap.put(v.getPlaca(), v);
-            return true;
+        System.out.println(hashmap);
+        return true;
     }
 
     public boolean remover(Vehiculo v) { //HACER EXEPCION
@@ -35,7 +37,14 @@ public class VehiculosHashMap {
             return false;
         hashmap.remove(v.getPlaca());
             return true;
-            
+    }        
         //regex "^(\\d{6}|[A-Z]{3}-\\d{3})$" placa
+        
+    public HashSet<String> getMarcas(){
+        HashSet<String> set = new HashSet<>();
+        for (Vehiculo vehiculo: hashmap.values()){
+            set.add(vehiculo.getMarca());
+        }
+        return set;
     }
 }
