@@ -19,7 +19,6 @@ public class MainFrame extends javax.swing.JFrame {
     private Editarvehiculos_JPanel editarvehiculos_jpanel;
     private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false);
     private GestionEmpleados gestionEmpleados_jpanel ;
-    
     private TablaEmpleados tablaEmpleados_jpanel;
     
     //Crear instancias de listas y/o objetos
@@ -46,6 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
     agregarvehiculos_jpanel = new Agregarvehiculos_JPanel(this);    
     editarvehiculos_jpanel = new Editarvehiculos_JPanel(this);
     gestionEmpleados_jpanel = new GestionEmpleados(this);
+    tablaEmpleados_jpanel = new TablaEmpleados();
     
 
     
@@ -54,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
     Actual_JPanel.add(agregarvehiculos_jpanel, "agregarvehiculos");   
     Actual_JPanel.add(editarvehiculos_jpanel, "editarvehiculos");    
     Actual_JPanel.add(gestionEmpleados_jpanel,"gestionempleados");
-    
+    Actual_JPanel.add(tablaEmpleados_jpanel, "tablaEmpleados_jpanel");
     }
     
     public void buscar() {      

@@ -22,7 +22,7 @@ public class GestionEmpleados extends javax.swing.JPanel {
     private DefaultTableModel model;
     private MainFrame mainFrame;
 
-    public GestionEmpleados(MainFrame aThis) {
+    public GestionEmpleados(MainFrame mainFrame) {
         gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
         this.mainFrame = mainFrame;
         initComponents();
@@ -60,7 +60,7 @@ public class GestionEmpleados extends javax.swing.JPanel {
 
         frm.setGestorEmpleados(gestorEmpleados);
         frm.loadTable();
-        frm.setVisible(true);
+        mainFrame.getCardlayout().show(mainFrame.getActual_JPanel(), "tablaEmpleados_jpanel");
 
         empleado = frm.getEmpleado();
 
@@ -281,11 +281,11 @@ public class GestionEmpleados extends javax.swing.JPanel {
                 .addComponent(btnReload)
                 .addGap(108, 108, 108)
                 .addComponent(btnDelete)
-                .addGap(128, 128, 128)
-                .addComponent(btnAdd)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSearch)
-                .addGap(114, 114, 114))
+                .addGap(52, 52, 52)
+                .addComponent(btnAdd)
+                .addContainerGap(305, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
