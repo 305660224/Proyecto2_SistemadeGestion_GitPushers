@@ -18,9 +18,9 @@ import javax.swing.table.TableRowSorter;
  */
 public class TablaEmpleados extends javax.swing.JPanel {
 
-     private Empleado empleado;
+    private Empleado empleado;
     private GestorEmpleados gestorEmpleados;
-     private TableRowSorter<DefaultTableModel> sorter;
+    private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> RowFilter;
 
     public Empleado getEmpleado() {
@@ -30,18 +30,16 @@ public class TablaEmpleados extends javax.swing.JPanel {
     public void setGestorEmpleados(GestorEmpleados gestorEmpleados) {
         this.gestorEmpleados = gestorEmpleados;
     }
-    
-    
-    
-    
+
     /**
      * Creates new form TablaEmpleados
      */
     public TablaEmpleados() {
+        gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
         initComponents();
     }
-    
-public void loadTable() {
+
+    public void loadTable() {
         DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
         model.setRowCount(0);
         for (Empleado emp : gestorEmpleados.getListaEmpleados()) {
@@ -55,8 +53,6 @@ public void loadTable() {
         }
     }
 
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,12 +62,24 @@ public void loadTable() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtFilter = new javax.swing.JTextField();
         btnAccept = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -163,46 +171,47 @@ public void loadTable() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
-    String texto = txtFilter.getText().trim();
-    if (texto.isEmpty()) {
-        sorter.setRowFilter(null); // Quita el filtro si el campo está vacío
-        return;
-    }
+        String texto = txtFilter.getText().trim();
+        if (texto.isEmpty()) {
+            sorter.setRowFilter(null); // Quita el filtro si el campo está vacío
+            return;
+        }
 
-    RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + texto);
-    sorter.setRowFilter(filtro);
+        RowFilter<Object, Object> filtro = RowFilter.regexFilter("(?i)" + texto);
+        sorter.setRowFilter(filtro);
 
     }//GEN-LAST:event_txtFilterActionPerformed
 
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
-   int row = tblEmpleados.getSelectedRow();
-    if (row == -1) {
-        UtilGuis.showErrorMessage(this, "Debe seleccionar un empleado", "Error");
-        return;
-    }
+        int row = tblEmpleados.getSelectedRow();
+        if (row == -1) {
+            UtilGuis.showErrorMessage(this, "Debe seleccionar un empleado", "Error");
+            return;
+        }
 
-    String cedula = String.valueOf(tblEmpleados.getValueAt(row, 0));
-    empleado = gestorEmpleados.buscar(cedula);
+        String cedula = String.valueOf(tblEmpleados.getValueAt(row, 0));
+        empleado = gestorEmpleados.buscar(cedula);
 
-    if (empleado == null) {
-        UtilGuis.showErrorMessage(this, "No se encontró el empleado con la cédula seleccionada", "Error");
-        return;
-    }
+        if (empleado == null) {
+            UtilGuis.showErrorMessage(this, "No se encontró el empleado con la cédula seleccionada", "Error");
+            return;
+        }
 
-    setVisible(false);
-   // this.dispose();
+        setVisible(false);
+        // this.dispose();
 
     }//GEN-LAST:event_btnAcceptActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         setVisible(false);
-     //  this.dispose();
+        //  this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAccept;
     private javax.swing.JButton jButton2;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblEmpleados;

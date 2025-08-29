@@ -18,7 +18,9 @@ public class MainFrame extends javax.swing.JFrame {
     private Agregarvehiculos_JPanel agregarvehiculos_jpanel;
     private Editarvehiculos_JPanel editarvehiculos_jpanel;
     private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false);
-    private GestionEmpleados gestionEmpleados_jpanel;
+    private GestionEmpleados gestionEmpleados_jpanel ;
+    
+    private TablaEmpleados tablaEmpleados_jpanel;
     
     //Crear instancias de listas y/o objetos
     private CardLayout cardlayout;
@@ -44,6 +46,8 @@ public class MainFrame extends javax.swing.JFrame {
     agregarvehiculos_jpanel = new Agregarvehiculos_JPanel(this);    
     editarvehiculos_jpanel = new Editarvehiculos_JPanel(this);
     gestionEmpleados_jpanel = new GestionEmpleados(this);
+    
+
     
     //Agregar los JPanels al JPanel contenedor
     Actual_JPanel.add(bienvenida_jpanel, "bienvenida");   
@@ -79,6 +83,12 @@ public class MainFrame extends javax.swing.JFrame {
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
+
+    public GestionEmpleados getGestionEmpleados_jpanel() {
+        return gestionEmpleados_jpanel;
+    }
+    
+    
 
 
     

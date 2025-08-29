@@ -23,13 +23,10 @@ public class GestionEmpleados extends javax.swing.JPanel {
     private MainFrame mainFrame;
 
     public GestionEmpleados(MainFrame aThis) {
-         this.mainFrame = mainFrame;
+        gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
+        this.mainFrame = mainFrame;
         initComponents();
     }
-
-    ///GestionEmpleados(MainFrame aThis) {
-      // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-   // }
 
     private void clear() {
         txtCedula.setText("");
@@ -41,10 +38,6 @@ public class GestionEmpleados extends javax.swing.JPanel {
         txtSalario.setText("");
 
         empleado = null;
-    }
-
-    private boolean validateRequiere() {
-        return UtilGuis.validateRequiere(txtFecha, txtNombre, txtCedula, txtCorreo, txtTelefono, txtPuesto, txtSalario);
     }
 
     private void delete() {
@@ -63,12 +56,10 @@ public class GestionEmpleados extends javax.swing.JPanel {
     }
 
     private void search() {
-
         TablaEmpleados frm = new TablaEmpleados();
 
         frm.setGestorEmpleados(gestorEmpleados);
         frm.loadTable();
-        // falta hacer la funcion de loadTable pero me da mucha pereza hacer esto ya JAJA
         frm.setVisible(true);
 
         empleado = frm.getEmpleado();
@@ -105,7 +96,7 @@ public class GestionEmpleados extends javax.swing.JPanel {
             String puesto = txtPuesto.getText().trim();
             double salario = Double.parseDouble(txtSalario.getText().trim());
 
-            Empleado empleado = new Empleado(cedula, nombre, fechaNacimiento, telefono, correo, puesto, salario);
+            empleado = new Empleado(cedula, nombre, fechaNacimiento, telefono, correo, puesto, salario);
 
             if (!gestorEmpleados.añadir(empleado)) {
                 JOptionPane.showMessageDialog(this, "No se agregó el registro  , Verifique si ya existe un empleado con esa cédula");

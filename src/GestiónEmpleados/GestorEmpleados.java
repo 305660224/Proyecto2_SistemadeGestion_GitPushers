@@ -23,6 +23,14 @@ public class GestorEmpleados implements List<Empleado> {
         return listaEmpleados;
     }
 
+    private static GestorEmpleados instanciaEmpleados;
+
+    public static GestorEmpleados getInstanciaEmpleados() {
+        if (instanciaEmpleados == null) {
+            instanciaEmpleados = new GestorEmpleados();
+        }
+        return instanciaEmpleados;
+    }
 
     @Override
     public boolean añadir(Empleado t) {
@@ -31,9 +39,11 @@ public class GestorEmpleados implements List<Empleado> {
         }
 
         // Validar que no exista otro con la misma cédula
-        for (Empleado emp : listaEmpleados) {
-            if (emp.getCedula().equalsIgnoreCase(t.getCedula())) {
-                return false; // Ya existe
+        if (listaEmpleados.size() != 0) {
+            for (Empleado emp : listaEmpleados) {
+                if (emp.getCedula().equalsIgnoreCase(t.getCedula())) {
+                    return false; // Ya existe
+                }
             }
         }
 
