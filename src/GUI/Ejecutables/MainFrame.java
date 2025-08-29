@@ -51,7 +51,7 @@ public class MainFrame extends javax.swing.JFrame {
         gestionEmpleados_jpanel = new GestionEmpleados(this);
         tablaEmpleados_jpanel = new TablaEmpleados();
         agregarReserva_Jpanel = new GestionReservas();
-        agregarContrato_Jpanel = new GestionContratos();
+        agregarContrato_Jpanel = new GestionContratos(this);
         agregarClientes_Jpanel = new GestionClientes();
 
 
@@ -103,7 +103,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     
-
     public Editarvehiculos_JPanel getEditarvehiculos_jpanel() {
         return editarvehiculos_jpanel;
     }
