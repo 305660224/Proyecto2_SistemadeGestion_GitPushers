@@ -73,6 +73,14 @@ public class GestionClientes extends javax.swing.JPanel {
 
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public ClienteArrayList getClienteLista() {
+        return clienteLista;
+    }   
+
     private void Buscar() {
     // crea y muestra el dialogo
     TablaBuscarCliente dialog = new TablaBuscarCliente(this.mainFrame, true);

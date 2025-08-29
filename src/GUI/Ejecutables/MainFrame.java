@@ -106,8 +106,11 @@ public class MainFrame extends javax.swing.JFrame {
     public Editarvehiculos_JPanel getEditarvehiculos_jpanel() {
         return editarvehiculos_jpanel;
     }
-    
-        
+
+    public GestionClientes getAgregarClientes_Jpanel() {
+        return agregarClientes_Jpanel;
+    }
+           
     //SETS
     
     public void setVehiculosHashMap(VehiculosHashMap vehiculosHashMap) {
