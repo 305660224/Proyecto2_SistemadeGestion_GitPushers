@@ -14,6 +14,15 @@ import java.util.ArrayList;
 public class GestionAlquiler implements List<Alquiler> {
 
     ArrayList<Alquiler> listaAlquileres = new ArrayList<>();
+    
+    private static GestionAlquiler InstanciaAlquiler;
+
+    public static GestionAlquiler getInstanciaAlquiler() {
+        if(null==InstanciaAlquiler){
+            InstanciaAlquiler=new GestionAlquiler();
+        }
+        return InstanciaAlquiler;
+    }
 
     public GestionAlquiler() {
         this.listaAlquileres = new ArrayList<>();

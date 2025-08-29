@@ -7,7 +7,7 @@ package GestionContratosAlquiler;
 import Clientes.Cliente;
 import Logico.Vehiculos.Vehiculo;
 import Logico.Vehiculos.Estado;
-import Utils.UtilsFecha;
+import java.time.Period;
 import java.time.LocalDate;
 
 
@@ -23,47 +23,41 @@ public class Alquiler {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private double monto;
-    private Estado estado;
+    private EstadoContrato estado;
 
-    public Alquiler(String numeroAlquiler, Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin, double tarifaDiaria) { // para solucionar el error lo que hice fue cambiar de parametro monto a por tarifaDiaria asi el error se va   
-      if (!UtilsFecha.NoFechaFutura(fechaInicio)) {
-            throw new IllegalArgumentException("La fecha de inicio no puede estar en el pasado.");
-        }
-      if (!fechaFin.isAfter(fechaInicio)) {
-            throw new IllegalArgumentException("La fecha de fin debe ser posterior a la fecha de inicio.");
-        }
+    public Alquiler(String numeroAlquiler, Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) { // para solucionar el error lo que hice fue cambiar de parametro monto a por tarifaDiaria asi el error se va   
       this.numeroAlquiler = numeroAlquiler;
         this.cliente = cliente;
         this.vehiculo = vehiculo;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.monto = calcularMonto(tarifaDiaria);   // nose el pq diablos me tira la senal de q hay algo mal .-. 
-        this.estado = Estado.ALQUILADO;
+        if(fechaInicio.isAfter(fechaInicio)){
+            this.fechaInicio = fechaInicio;
+        }else{
+            throw new IllegalArgumentException("La fecha de inicio no puede estar en el pasado.");
+        }
+        if(fechaFin.isAfter(fechaInicio)){
+            this.fechaFin = fechaFin;
+        }else{
+            throw new IllegalArgumentException("La fecha de fin debe ser posterior a la fecha de inicio.");
+        }
+        this.monto = 35*Period.between(fechaInicio, fechaFin).getDays();   // nose el pq diablos me tira la senal de q hay algo mal .-. 
+        this.estado = EstadoContrato.Activo;
         this.vehiculo.setEstado(Estado.ALQUILADO);
       
     }
     
-    private double calcularMonto(double tarifaDiaria) {
-        long dias = fechaInicio.until(fechaFin).getDays();
-        if (dias <= 0) {
-            throw new IllegalArgumentException("El período de alquiler debe ser de al menos 1 día.");
-        }
-        return tarifaDiaria * dias;
-    }
-    
     public void finalizar() {
-        if (estado != Estado.ALQUILADO  ) {
+        if (estado != EstadoContrato.Activo  ) {
             throw new IllegalStateException("Solo un alquiler activo puede finalizarse.");
         }
-        this.estado = Estado.DISPONIBLE;
+        this.estado = EstadoContrato.Finalizado;
         this.vehiculo.setEstado(Estado.DISPONIBLE);
     }
     
     public void cancelar() {
-        if (estado == Estado.DISPONIBLE) {
+        if (estado == EstadoContrato.Finalizado || estado == EstadoContrato.Cancelado) {
             throw new IllegalStateException("No se puede cancelar un alquiler ya finalizado.");
         }
-        this.estado = Estado.DISPONIBLE;
+        this.estado = EstadoContrato.Cancelado;
         this.vehiculo.setEstado(Estado.DISPONIBLE);
     }
 
@@ -91,39 +85,7 @@ public class Alquiler {
         return monto;
     }
 
-    public Estado getEstado() {
+    public EstadoContrato getEstado() {
         return estado;
-    }
-
-    public void setNumeroAlquiler(String numeroAlquiler) {
-        this.numeroAlquiler = numeroAlquiler;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public void setMonto(double monto) {
-        this.monto = monto;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-
-
-    
+    }  
 }
