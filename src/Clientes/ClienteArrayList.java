@@ -17,6 +17,15 @@ public class ClienteArrayList implements List<Cliente> {
 
     ArrayList<Cliente> losClientes = new ArrayList<>();
 
+    private static ClienteArrayList instanciaClientes;
+
+    public static ClienteArrayList getInstanciaClientes() {
+        if (null == instanciaClientes) {
+            instanciaClientes = new ClienteArrayList();
+        }
+        return instanciaClientes;
+    }
+
     public ClienteArrayList() {
         this.losClientes = new ArrayList<>();//Se inicializa
     }
@@ -50,7 +59,7 @@ public class ClienteArrayList implements List<Cliente> {
 
     @Override
     public boolean remover(Cliente t) {
-       return false;
+        return false;
     }
 
     @Override
@@ -68,27 +77,34 @@ public class ClienteArrayList implements List<Cliente> {
     public void showAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    public boolean eliminarCliente(Cliente t, GestionReserva gestionReserva){
-         // Revisar si el cliente tiene reservas activas
+
+    public boolean eliminarCliente(Cliente t, GestionReserva gestionReserva)
+            throws ClienteReservaException, ClienteNoEncontradoException {
+
+        // Revisar si el cliente tiene reservas activas
         if (gestionReserva.buscarXCliente(t) != null) {
-            return false; // No se puede eliminar
+            throw new ClienteReservaException("El cliente tiene reservas activas y no puede ser eliminado.");
         }
 
-        // Si no tiene reservas, eliminar
-        return losClientes.removeIf(cli -> cli.getCedula().equals(t.getCedula()));
-        
+        // Intentar eliminarlo
+        boolean eliminado = losClientes.removeIf(cli -> cli.getCedula().equals(t.getCedula()));
+
+        if (!eliminado) {
+            throw new ClienteNoEncontradoException("El cliente con cédula " + t.getCedula() + " no existe en la lista.");
+        }
+
+        return true; // si lo eliminó con éxito
     }
-    
+
     public boolean actualizarCliente(String cedula, String telefono, String correo, Tipo_licencia_Enum licencia) {
-    Cliente cli = buscar(cedula);
-    if (cli != null) {
-        cli.setTelefono(telefono);
-        cli.setCorreo(correo);
-        cli.setLicencia(licencia);
-        return true;
+        Cliente cli = buscar(cedula);
+        if (cli != null) {
+            cli.setTelefono(telefono);
+            cli.setCorreo(correo);
+            cli.setLicencia(licencia);
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
 }

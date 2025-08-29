@@ -23,6 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
     private TablaEmpleados tablaEmpleados_jpanel;
     private GestionReservas agregarReserva_Jpanel;
     private GestionContratos agregarContrato_Jpanel;
+    private GestionClientes agregarClientes_Jpanel;
 
     //Crear instancias de listas y/o objetos
     private CardLayout cardlayout;
@@ -51,6 +52,7 @@ public class MainFrame extends javax.swing.JFrame {
         tablaEmpleados_jpanel = new TablaEmpleados();
         agregarReserva_Jpanel = new GestionReservas();
         agregarContrato_Jpanel = new GestionContratos();
+        agregarClientes_Jpanel = new GestionClientes();
 
 
     
@@ -62,6 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
         Actual_JPanel.add(tablaEmpleados_jpanel, "tablaEmpleados_jpanel");
         Actual_JPanel.add(agregarReserva_Jpanel, "Agregar Reserva");
         Actual_JPanel.add(agregarContrato_Jpanel, "Agregar Contrato");
+        Actual_JPanel.add(agregarClientes_Jpanel, "Agregar Cliente");
     }
 
     public void buscar() {
@@ -130,6 +133,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -190,6 +194,15 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Clientes");
+
+        jMenuItem7.setText("Agregar Cliente");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Empleados");
@@ -257,6 +270,10 @@ public class MainFrame extends javax.swing.JFrame {
         cardlayout.show(Actual_JPanel, "Agregar Contrato");
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        cardlayout.show(Actual_JPanel, "Agregar Cliente");
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -290,5 +307,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }
