@@ -8,6 +8,7 @@ import Clientes.Cliente;
 import GestionContratosAlquiler.Alquiler;
 import GestionContratosAlquiler.GestionAlquiler;
 import Lists.List;
+import Logico.Vehiculos.Categoria;
 import Logico.Vehiculos.Estado;
 import Logico.Vehiculos.Vehiculo;
 import Utils.UtilsFecha;
@@ -53,6 +54,7 @@ public class GestionReserva implements List<Reservas> {
             return false;
         } else {
             Reserva.add(t);
+            t.Ordenar((GestionReserva) Reserva);
             return true;
         }
     }
@@ -101,10 +103,10 @@ public class GestionReserva implements List<Reservas> {
     }
 
     //Se modifica con el numero de id de reserva que se va a cambiar y el vehiculo que se va a cambiar
-    public boolean Modificar(int ReservaModificada, Vehiculo NuevoVehiculo) {
+    public boolean Modificar(int ReservaModificada, Categoria NuevoVehiculo) {
         for (Reservas Modificar : Reserva) {
             if (Modificar.getIdReserva() == ReservaModificada) {
-                Modificar.setVehiculo(NuevoVehiculo);
+                Modificar.getVehiculo().setCategoria(NuevoVehiculo);
                 return true;
             }
         }

@@ -9,7 +9,18 @@ import java.util.HashSet;
  */
 public class VehiculosHashMap {
     HashMap<String,Vehiculo> hashmap;
+    
+    private static VehiculosHashMap InstanciaVehiculo;
 
+    public static VehiculosHashMap getInstanciaVehiculo() {
+        if(null==InstanciaVehiculo){
+            InstanciaVehiculo=new VehiculosHashMap();
+        }
+        return InstanciaVehiculo;
+    }
+    
+    
+    
     //GETS
     public HashMap<String, Vehiculo> getHashmap() {
         return hashmap;

@@ -11,6 +11,10 @@ import Logico.Vehiculos.Vehiculo;
 import Logico.Vehiculos.VehiculosHashMap;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Queue;
+import java.util.TreeSet;
 
 /**
  *
@@ -48,21 +52,24 @@ public class Reservas {
         this.vehiculo = vehiculo;
     }
 
-    public Reservas(int idReserva/*Tal vez cambia después de duda con el profe(si es automaticamente generado o no)*/, Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) {
+    public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
+    }
+    
+    public Reservas(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.idReserva = GestionReserva.getInstanciaReserva().Reserva.size() + 1;
         this.cliente = cliente;
         this.vehiculo = vehiculo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-    public boolean verf_Cedula(ClienteArrayList ClienteLista) {
-        return cliente.equals(ClienteLista.buscar(cliente));
+    public boolean verf_Cedula(ClienteArrayList ClienteLista,String cedula) {
+        return cliente.equals(ClienteLista.buscarXcedula(cedula));
     }
 
-    public boolean verf_Vehiculo(VehiculosHashMap VehiculosLista) {
+    public boolean verf_Vehiculo(VehiculosHashMap VehiculosLista,String placa) {
         return vehiculo.equals(VehiculosLista.buscar(vehiculo.getPlaca()));
-
     }
 
     public boolean NoMenorHoy() {
@@ -79,5 +86,21 @@ public class Reservas {
 
     public boolean ValidarDispoVehiculo() {
         return vehiculo.getEstado() == Estado.DISPONIBLE;
+    }
+    
+    public void Ordenar(GestionReserva Lista) {
+        int cont=0;
+        TreeSet<Reservas> Orden;
+        
+        Orden = new TreeSet<>(Comparator.comparing(Reservas::getFechaInicio).thenComparing(Reservas::getFechaInicio));
+        
+        Orden.addAll((Collection<? extends Reservas>) Lista);
+        
+        Lista.Reserva.clear();
+        Lista.Reserva.addAll(Orden);
+        for(Reservas ordenarId:Lista.Reserva){
+            cont++;
+            Lista.Reserva.peek().setIdReserva(cont);
+        }
     }
 }
