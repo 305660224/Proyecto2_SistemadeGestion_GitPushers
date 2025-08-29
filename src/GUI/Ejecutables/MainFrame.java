@@ -1,5 +1,5 @@
-
 package GUI.Ejecutables;
+
 import GUI.Ejecutables.Buscarvehiculos_JDialog;
 import Logico.Vehiculos.*;
 import java.awt.CardLayout;
@@ -7,12 +7,13 @@ import javax.swing.JPanel;
 
 /**
  * 11/08/2025
+ *
  * @author denis
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
-    
+
     //Creacion instancia Jpanels/JDiaogs
     private Bienvenida_JPanel bienvenida_jpanel;
     private Agregarvehiculos_JPanel agregarvehiculos_jpanel;
@@ -20,44 +21,50 @@ public class MainFrame extends javax.swing.JFrame {
     private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false);
     private GestionEmpleados gestionEmpleados_jpanel ;
     private TablaEmpleados tablaEmpleados_jpanel;
-    
+    private GestionReservas agregarReserva_Jpanel;
+    private GestionContratos agregarContrato_Jpanel;
+
     //Crear instancias de listas y/o objetos
     private CardLayout cardlayout;
-    
+
     private VehiculosHashMap vehiculosHashMap;
     private Vehiculo vehiculo;
-    
+
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {   
-        initComponents();    
-    
-    //inicializar listas y/o objetos    
-    cardlayout = new CardLayout();
-    Actual_JPanel.setLayout(cardlayout);
-    
-    vehiculosHashMap = new VehiculosHashMap();   
+    public MainFrame() {
+        initComponents();
+
+        //inicializar listas y/o objetos    
+        cardlayout = new CardLayout();
+        Actual_JPanel.setLayout(cardlayout);
+
+        vehiculosHashMap = new VehiculosHashMap();
     vehiculo=null;    
-    
-    //inicializar instancia Jpanels/JDiaogs    
-    bienvenida_jpanel = new Bienvenida_JPanel();
-    agregarvehiculos_jpanel = new Agregarvehiculos_JPanel(this);    
-    editarvehiculos_jpanel = new Editarvehiculos_JPanel(this);
-    gestionEmpleados_jpanel = new GestionEmpleados(this);
-    tablaEmpleados_jpanel = new TablaEmpleados();
-    
+
+        //inicializar instancia Jpanels/JDiaogs    
+        bienvenida_jpanel = new Bienvenida_JPanel();
+        agregarvehiculos_jpanel = new Agregarvehiculos_JPanel(this);
+        editarvehiculos_jpanel = new Editarvehiculos_JPanel(this);
+        gestionEmpleados_jpanel = new GestionEmpleados(this);
+        tablaEmpleados_jpanel = new TablaEmpleados();
+        agregarReserva_Jpanel = new GestionReservas();
+        agregarContrato_Jpanel = new GestionContratos();
+
 
     
-    //Agregar los JPanels al JPanel contenedor
-    Actual_JPanel.add(bienvenida_jpanel, "bienvenida");   
-    Actual_JPanel.add(agregarvehiculos_jpanel, "agregarvehiculos");   
-    Actual_JPanel.add(editarvehiculos_jpanel, "editarvehiculos");    
+        //Agregar los JPanels al JPanel contenedor
+        Actual_JPanel.add(bienvenida_jpanel, "bienvenida");
+        Actual_JPanel.add(agregarvehiculos_jpanel, "agregarvehiculos");
+        Actual_JPanel.add(editarvehiculos_jpanel, "editarvehiculos");
     Actual_JPanel.add(gestionEmpleados_jpanel,"gestionempleados");
-    Actual_JPanel.add(tablaEmpleados_jpanel, "tablaEmpleados_jpanel");
+        Actual_JPanel.add(tablaEmpleados_jpanel, "tablaEmpleados_jpanel");
+        Actual_JPanel.add(agregarReserva_Jpanel, "Agregar Reserva");
+        Actual_JPanel.add(agregarContrato_Jpanel, "Agregar Contrato");
     }
-    
-    public void buscar() {      
+
+    public void buscar() {
         buscarvehiculos_jdialog.setVehiculosHashMap(vehiculosHashMap);
         buscarvehiculos_jdialog.setVisible(true);
     }
@@ -67,19 +74,19 @@ public class MainFrame extends javax.swing.JFrame {
     public TablaEmpleados getTablaEmpleados_jpanel() {
         return tablaEmpleados_jpanel;
     }
-    
+
     public Buscarvehiculos_JDialog getBuscarvehiculos_jdialog() {
         return buscarvehiculos_jdialog;
     }
-   
+
     public CardLayout getCardlayout() {
         return cardlayout;
     }
-    
+
     public JPanel getActual_JPanel() {
         return Actual_JPanel;
     }
-      
+
     public VehiculosHashMap getVehiculosHashMap() {
         return vehiculosHashMap;
     }
@@ -91,7 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
     public GestionEmpleados getGestionEmpleados_jpanel() {
         return gestionEmpleados_jpanel;
     }
-    
+
     
 
 
@@ -105,7 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-    
+
     
     
 
@@ -123,7 +130,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 600));
@@ -193,9 +202,27 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reservas");
+
+        jMenuItem5.setText("Agregar Reserva");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem5);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Alquileres");
+
+        jMenuItem6.setText("Agregar Contrato");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -204,20 +231,28 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-    cardlayout.show(Actual_JPanel, "agregarvehiculos");
+        cardlayout.show(Actual_JPanel, "agregarvehiculos");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-    cardlayout.show(Actual_JPanel, "editarvehiculos");
+        cardlayout.show(Actual_JPanel, "editarvehiculos");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-    buscar();
+        buscar();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       cardlayout.show(Actual_JPanel, "gestionempleados");
+        cardlayout.show(Actual_JPanel, "gestionempleados");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        cardlayout.show(Actual_JPanel, "Agregar Reserva");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        cardlayout.show(Actual_JPanel, "Agregar Contrato");
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -250,5 +285,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }
