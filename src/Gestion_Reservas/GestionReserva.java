@@ -5,7 +5,10 @@
 package Gestion_Reservas;
 
 import Clientes.Cliente;
+import GestionContratosAlquiler.Alquiler;
+import GestionContratosAlquiler.GestionAlquiler;
 import Lists.List;
+import Logico.Vehiculos.Estado;
 import Logico.Vehiculos.Vehiculo;
 import Utils.UtilsFecha;
 import java.time.LocalDate;
@@ -19,7 +22,31 @@ import java.util.Queue;
 public class GestionReserva implements List<Reservas> {
 
     Queue<Reservas> Reserva = new LinkedList<>();
+    private GestionAlquiler gesAlquiler;
 
+    private static GestionReserva InstanciaReserva;
+
+    public static GestionReserva getInstanciaReserva() {
+        if (InstanciaReserva == null) {
+            InstanciaReserva = new GestionReserva();
+        }
+        return InstanciaReserva;
+    }
+
+    //GETS Y CONSTRUCTORES
+    public Queue<Reservas> getReserva() {
+        return Reserva;
+    }
+
+    public GestionAlquiler getGesAlquiler() {
+        return gesAlquiler;
+    }
+
+    public GestionReserva() {
+        this.gesAlquiler = GestionAlquiler.getInstanciaAlquiler();
+    }
+
+    //METODOS GENERICOS
     @Override
     public boolean añadir(Reservas t) {
         if (t.equals(buscar(t))) {
@@ -49,6 +76,7 @@ public class GestionReserva implements List<Reservas> {
         return null;
     }
 
+    //METODOS PERSONALES
     public Reservas buscarXFechas(LocalDate FechaIniBuscar, LocalDate FechaFinBuscar) {
         for (Reservas reservaBusFecha : Reserva) {
             if (reservaBusFecha.getFechaInicio() == FechaIniBuscar && reservaBusFecha.getFechaFin() == FechaFinBuscar) {
@@ -102,6 +130,22 @@ public class GestionReserva implements List<Reservas> {
     }
 
     public boolean ConfirmarReserva() {
-        //Cuando este Contratos de Alquiler(creo)
+        if (Reserva.isEmpty()) {
+            return false;
+        }
+
+        Reservas ReservaTemp = Reserva.peek();
+
+        if (ReservaTemp.ValidarDispoVehiculo()) {
+            return false;
+        }
+
+        ReservaTemp.getVehiculo().setEstado(Estado.ALQUILADO);
+
+        Alquiler NuevoAlquiler = new Alquiler(String.valueOf(gesAlquiler.getListaAlquileres().size() + 1), ReservaTemp.getCliente(), ReservaTemp.getVehiculo(), ReservaTemp.getFechaInicio(), ReservaTemp.getFechaFin());
+
+        gesAlquiler.añadir(NuevoAlquiler);
+        return true;
     }
 }
+

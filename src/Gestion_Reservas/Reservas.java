@@ -5,6 +5,7 @@
 package Gestion_Reservas;
 
 import Clientes.Cliente;
+import Clientes.ClienteArrayList;
 import Logico.Vehiculos.Estado;
 import Logico.Vehiculos.Vehiculo;
 import Logico.Vehiculos.VehiculosHashMap;
@@ -55,8 +56,8 @@ public class Reservas {
         this.fechaFin = fechaFin;
     }
 
-    public boolean verf_Cedula() {
-        //Cuando este Lista de Clientes
+    public boolean verf_Cedula(ClienteArrayList ClienteLista) {
+        return cliente.equals(ClienteLista.buscar(cliente));
     }
 
     public boolean verf_Vehiculo(VehiculosHashMap VehiculosLista) {
