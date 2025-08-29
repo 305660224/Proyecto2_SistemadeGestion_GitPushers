@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import java.awt.Frame;
+import java.awt.HeadlessException;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,7 +20,8 @@ import javax.swing.table.DefaultTableModel;
  * @author denis
  */
 public class GestionClientes extends javax.swing.JPanel {
-
+    
+    private MainFrame mainFrame;
     private Cliente cliente;
     private ClienteArrayList clienteLista;
     private GestionReserva gestionReserva;
@@ -30,7 +32,7 @@ public class GestionClientes extends javax.swing.JPanel {
         String correo = txtCorreoElectronico.getText();
         String telefono = txtTeléfono.getText();
         LocalDate fecha = UtilsFecha.toLocalDate(txtFechaNacimiento.getText());
-        Tipo_licencia_Enum licencia = (Tipo_licencia_Enum) txtTipoLicencia.getSelectedItem();
+        Tipo_licencia_Enum licencia = Tipo_licencia_Enum.valueOf(txtTipoLicencia.getSelectedItem().toString());
 
         cliente = new Cliente(licencia, cedula, nombre, fecha, telefono, correo);
 
@@ -72,11 +74,8 @@ public class GestionClientes extends javax.swing.JPanel {
     }
 
     private void Buscar() {
-         // obtiene la ventana principal que contiene tu panel
-    java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
     // crea y muestra el dialogo
-    TablaBuscarCliente dialog = new TablaBuscarCliente(parent, true);
+    TablaBuscarCliente dialog = new TablaBuscarCliente(this.mainFrame, true);
     dialog.setListaClientes(clienteLista); // le paso la lista de clientes
     dialog.setVisible(true);
 
@@ -155,6 +154,7 @@ public class GestionClientes extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1000, 600));
@@ -183,8 +183,8 @@ public class GestionClientes extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 204, 51));
-        jLabel4.setText("Fecha de nacimiento");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, -1, -1));
+        jLabel4.setText("##/##/####");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, -1, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 204, 51));
@@ -208,7 +208,12 @@ public class GestionClientes extends javax.swing.JPanel {
 
         jPanel1.add(txtTipoLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 190, 40));
 
-        txtFechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd MM YYYY"))));
+        txtFechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        txtFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaNacimientoActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 210, 40));
 
         txtNombreCompleto.addActionListener(new java.awt.event.ActionListener() {
@@ -275,6 +280,11 @@ public class GestionClientes extends javax.swing.JPanel {
         jLabel12.setText("Correo");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, -1, -1));
 
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 204, 51));
+        jLabel14.setText("Fecha de nacimiento");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, -1, 30));
+
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/cliente33.jpg"))); // NOI18N
         jLabel13.setText("jLabel13");
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 600));
@@ -318,6 +328,37 @@ public class GestionClientes extends javax.swing.JPanel {
         Elimina();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
+       String fechaTexto = txtFechaNacimiento.getText();
+
+    try {
+        // Convertir a LocalDate (usando tu clase UtilsFecha)
+        LocalDate fechaNacimiento = UtilsFecha.toLocalDate(fechaTexto);
+        LocalDate hoy = LocalDate.now();
+
+        // Calcular edad
+        int edad = java.time.Period.between(fechaNacimiento, hoy).getYears();
+
+        if (edad < 18) {
+            JOptionPane.showMessageDialog(this,
+                "El cliente debe ser mayor de edad (mínimo 18 años).",
+                "Fecha inválida",
+                JOptionPane.ERROR_MESSAGE);
+            txtFechaNacimiento.setValue(null); // limpia el campo
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Edad válida: " + edad + " años.",
+                "Validación correcta",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (HeadlessException e) {
+        JOptionPane.showMessageDialog(this,
+            "Formato de fecha incorrecto. Use dd/MM/yyyy",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_txtFechaNacimientoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -328,6 +369,7 @@ public class GestionClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -118,7 +118,7 @@ public class ClienteArrayList implements List<Cliente> {
     }
 
     public Iterable<Cliente> getClientes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return losClientes;
     }
 
 }
