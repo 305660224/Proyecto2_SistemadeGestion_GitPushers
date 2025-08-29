@@ -6,7 +6,7 @@ package GUI.Ejecutables;
 import Clientes.Cliente;
 import GUI.Ejecutables.*;
 import GestionContratosAlquiler.Alquiler;
-import Logico.Vehiculos.Categoria;
+import Logico.Vehiculos.Estado;
 import Logico.Vehiculos.Vehiculo;
 import java.time.Year;
 import javax.swing.JOptionPane;
@@ -37,7 +37,7 @@ public class GestionContratos extends javax.swing.JPanel {
         LocalDate FechaFin=UtilsFecha.toLocalDate(txtFechaFin.getText());
         
         if (FechaInicio.isAfter(FechaFin)||FechaInicio.isBefore(LocalDate.now())) {
-            JOptionPane.showMessageDialog(this, "La FECHA DE INICIO del contrato ES INCORRECTO!");
+            JOptionPane.showMessageDialog(this, "La FECHA del contrato ES INCORRECTA!");
             return ;
         } else {  
         if (mainFrame.getAgregarClientes_Jpanel().getClienteLista().buscarXcedula(ClienteId) == null) {
@@ -49,11 +49,10 @@ public class GestionContratos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "NO se encontro el VEHICULO indicado");
         } else {
             vehiculo =  mainFrame.getVehiculosHashMap().buscar(Vehiculo);
-        mainFrame.getBuscarvehiculos_jdialog().setVehiculosHashMap(mainFrame.getVehiculosHashMap());
-        mainFrame.getBuscarvehiculos_jdialog().cargartabla();
+            mainFrame.setContrato(new Alquiler(NumeroAlquiler, cliente, vehiculo, FechaInicio, FechaFin));
+            mainFrame.getContratoslista().añadir(mainFrame.getContrato());
+            vehiculo.setEstado(Estado.ALQUILADO);
         }
-        mainFrame.setContrato(new Alquiler(NumeroAlquiler, cliente, vehiculo, FechaInicio, FechaFin));
-        System.out.println(mainFrame.getContrato().toString());
     }
   }      
 } 
@@ -81,11 +80,11 @@ public class GestionContratos extends javax.swing.JPanel {
         txtClienteNombre = new javax.swing.JTextField();
         txtNumeroAlquiler = new javax.swing.JFormattedTextField();
         txtVehiculo = new javax.swing.JFormattedTextField();
-        jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtClienteId = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1000, 600));
@@ -144,9 +143,9 @@ public class GestionContratos extends javax.swing.JPanel {
         jLabel8.setText("Cliente Id ");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, -1));
 
+        txtClienteNombre.setEditable(false);
         txtClienteNombre.setBackground(new java.awt.Color(0, 102, 102));
         txtClienteNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        txtClienteNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtClienteNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtClienteNombre.setBorder(null);
         txtClienteNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +153,7 @@ public class GestionContratos extends javax.swing.JPanel {
                 txtClienteNombreActionPerformed(evt);
             }
         });
-        add(txtClienteNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, 150, 30));
+        add(txtClienteNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, 150, 30));
 
         txtNumeroAlquiler.setBackground(new java.awt.Color(0, 102, 102));
         txtNumeroAlquiler.setBorder(null);
@@ -190,11 +189,6 @@ public class GestionContratos extends javax.swing.JPanel {
         });
         add(txtVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 150, 30));
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Cliente Nombre");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, -1, -1));
-
         jButton2.setBackground(new java.awt.Color(0, 102, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/Search.png"))); // NOI18N
         jButton2.setMaximumSize(new java.awt.Dimension(60, 60));
@@ -229,7 +223,9 @@ public class GestionContratos extends javax.swing.JPanel {
 
         txtClienteId.setBackground(new java.awt.Color(0, 102, 102));
         txtClienteId.setBorder(null);
+        txtClienteId.setForeground(new java.awt.Color(255, 255, 255));
         txtClienteId.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#########"))));
+        txtClienteId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtClienteId.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtClienteId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,6 +233,11 @@ public class GestionContratos extends javax.swing.JPanel {
             }
         });
         add(txtClienteId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 150, 30));
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Cliente Nombre");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/agregarContrato_Background.png"))); // NOI18N
         add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -263,7 +264,7 @@ public class GestionContratos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtVehiculoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        mainFrame.buscar();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -285,11 +286,11 @@ public class GestionContratos extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JFormattedTextField txtClienteId;
     private javax.swing.JTextField txtClienteNombre;
     private javax.swing.JFormattedTextField txtFechaFin;

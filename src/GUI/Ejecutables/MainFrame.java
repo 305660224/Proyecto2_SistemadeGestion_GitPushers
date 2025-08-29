@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Bienvenida_JPanel bienvenida_jpanel;
     private Agregarvehiculos_JPanel agregarvehiculos_jpanel;
     private Editarvehiculos_JPanel editarvehiculos_jpanel;
+    private Buscarcontratos_JDialog buscarcontratos_jdialog = new Buscarcontratos_JDialog(this, false, this);
     private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false, this);
     private GestionEmpleados gestionEmpleados_jpanel ;
     private TablaEmpleados tablaEmpleados_jpanel;
@@ -77,6 +78,11 @@ public class MainFrame extends javax.swing.JFrame {
     public void buscar() {
         buscarvehiculos_jdialog.setVehiculosHashMap(vehiculosHashMap);
         buscarvehiculos_jdialog.setVisible(true);
+    }
+    
+    public void buscarContratos() {
+        buscarcontratos_jdialog.setContratolista(Contratoslista);
+        buscarcontratos_jdialog.setVisible(true);
     }
     
     //GETS}
