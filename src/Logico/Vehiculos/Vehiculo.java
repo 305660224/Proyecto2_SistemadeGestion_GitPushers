@@ -1,6 +1,7 @@
 
 package Logico.Vehiculos;
 import java.time.Year;
+import javax.swing.ImageIcon;
 //import java.util.regex.*;
 
 /**
@@ -15,8 +16,14 @@ public class Vehiculo {
     private Year año;
     private Categoria categoria;
     private Estado estado;
+    private ImageIcon imagen;
     
     //GETS
+    public ImageIcon getImagen() {
+        return imagen;
+    }
+    
+    
     public String getPlaca() {
         return placa;
     }
@@ -57,7 +64,8 @@ public class Vehiculo {
 
     
     //CONSTRUCTOR
-    public Vehiculo(String placa, String marca, String modelo, Year año, Categoria categoria) {
+    public Vehiculo(String placa, String marca, String modelo, Year año, Categoria categoria, ImageIcon imagen) {
+        this.imagen = imagen;
         if (placa.toUpperCase().matches("^(?:\\d{3}-\\d{3}|[A-Z]{3}-\\d{3})$")) { //CORREGIR          
         this.placa = placa.toUpperCase();
         }
@@ -74,11 +82,8 @@ public class Vehiculo {
 
     @Override
     public String toString() {
-        return "Vehiculo{" + "placa=" + placa + ", marca=" + marca + ", modelo=" + modelo + ", a\u00f1o=" + año + ", categoria=" + categoria + ", estado=" + estado + '}';
+        return "Vehiculo{" + "placa=" + placa + ", marca=" + marca + ", modelo=" + modelo + ", a\u00f1o=" + año + ", categoria=" + categoria + ", estado=" + estado + ", imagen=" + imagen + '}';
     }
-
-
-
 
         
 }

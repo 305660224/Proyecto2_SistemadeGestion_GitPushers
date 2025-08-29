@@ -11,9 +11,11 @@ import java.time.Year;
 public class Agregarvehiculos_JPanel extends javax.swing.JPanel {
 
     private MainFrame mainFrame;
+    private ImageIcon imagen;
     
     public Agregarvehiculos_JPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        imagen = null;
         initComponents();
         mostrarCategorias();
         limpiar();
@@ -26,10 +28,13 @@ public class Agregarvehiculos_JPanel extends javax.swing.JPanel {
         Year año=Year.parse(txtAño.getText());
         Categoria categoria=(Categoria)txtCategoria.getSelectedItem();
         
-        mainFrame.setVehiculo(new Vehiculo(placa, marca, modelo, año, categoria));
+        mainFrame.setVehiculo(new Vehiculo(placa, marca, modelo, año, categoria, imagen));
         if (año.isAfter(Year.now())||año.isBefore(Year.of(1990))) {
             JOptionPane.showMessageDialog(this, "El año del vehiculo ES INCORRECTO!");
-        } else {                       
+        } else {  
+        if (imagen == null) {
+            JOptionPane.showMessageDialog(this, "Debe SELECCIONAR una IMAGEN");
+        } else {    
         if (!mainFrame.getVehiculosHashMap().anadir(mainFrame.getVehiculo())){
             JOptionPane.showMessageDialog(this, "El vehiculo YA EXISTE en el registro!");
             return;
@@ -37,7 +42,8 @@ public class Agregarvehiculos_JPanel extends javax.swing.JPanel {
         mostrarMarcas();
         mainFrame.getBuscarvehiculos_jdialog().setVehiculosHashMap(mainFrame.getVehiculosHashMap());
         mainFrame.getBuscarvehiculos_jdialog().cargartabla();
-    }    
+    } 
+} 
     
     private void limpiar(){
         txtAño.setText("");
@@ -244,7 +250,8 @@ public class Agregarvehiculos_JPanel extends javax.swing.JPanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         JFileChooser seleccionar = new JFileChooser();
         seleccionar.showOpenDialog(seleccionar);
-        jLabel7.setIcon(new javax.swing.ImageIcon(seleccionar.getSelectedFile().getAbsolutePath()));;
+        imagen = new ImageIcon(seleccionar.getSelectedFile().getAbsolutePath());
+        jLabel7.setIcon(imagen);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoActionPerformed

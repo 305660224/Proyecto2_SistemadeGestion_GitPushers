@@ -6,8 +6,12 @@ package GUI.Ejecutables;
 
 import Logico.Vehiculos.Vehiculo;
 import Logico.Vehiculos.VehiculosHashMap;
+import Utils.UtilGuis;
 import java.util.HashMap;
+import javax.swing.JFrame;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,16 +21,32 @@ public class Buscarvehiculos_JDialog extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Buscarvehiculos_JDialog.class.getName());
 
+    private TableRowSorter<DefaultTableModel> sorter; //Se usa para reordenar los datos de una tabla
+    private RowFilter<DefaultTableModel, Object> rowFilter; //Filtro
     private VehiculosHashMap vehiculosHashMap;
+    private Vehiculo vehiculo;
     private DefaultTableModel model;
     private int Tamano;
+    private MainFrame mainFrame;
     
-    public Buscarvehiculos_JDialog(java.awt.Frame parent, boolean modal) {
+    public Buscarvehiculos_JDialog(java.awt.Frame parent, boolean modal, MainFrame mainFrame) {
         super(parent, modal);
         initComponents();
         //Inicializar
         model= (DefaultTableModel) tblVehiculos.getModel();
+        sorter = new TableRowSorter<>(model);  //Es el que filtra lo escrito en el JText por atributos del objeto, Busca coincidencias
+        tblVehiculos.setRowSorter(sorter);
+        model= (DefaultTableModel) tblVehiculos.getModel();
         Tamano = 0;
+        this.mainFrame = mainFrame;
+    }
+
+    private Buscarvehiculos_JDialog(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
     
     public void aumentartamano() {
@@ -66,40 +86,26 @@ public class Buscarvehiculos_JDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        txtFilter = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblVehiculos = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setText("   Busca un vehiculo!");
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 30));
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton1.setText("+");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtFilter.setText("   Busca un vehiculo!");
+        txtFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtFilterActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 0, 50, 30));
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton2.setText("-");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 50, 30));
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jPanel1.add(txtFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 30));
 
         tblVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,18 +120,52 @@ public class Buscarvehiculos_JDialog extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(tblVehiculos);
 
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 462, 260));
+
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/edit_delete_mail (4).png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, 50));
+
+        jButton4.setBackground(new java.awt.Color(51, 51, 51));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/accepted_48.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 230, 50));
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        aumentartamano();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int row =tblVehiculos.getSelectedRow();
+        if (row==-1){
+            UtilGuis.showErrorMessage(this, "Debe seleccionar un Vehiculo", "Error");
+            return;
+        }
+        String id=String.valueOf(tblVehiculos.getValueAt(row,0));
+        vehiculo=vehiculosHashMap.buscar(id);
+        setVisible(false);
+        this.dispose(); 
+        mainFrame.getEditarvehiculos_jpanel().CargarInfoVehiculos();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        disminuirtamano();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
+        rowFilter = RowFilter.regexFilter("(?i)" + txtFilter.getText());
+        sorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_txtFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,11 +205,11 @@ public class Buscarvehiculos_JDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblVehiculos;
+    private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,12 @@
  */
 package GUI.Ejecutables;
 
+import Logico.Vehiculos.Categoria;
+import Logico.Vehiculos.Estado;
+import Logico.Vehiculos.Vehiculo;
+import javax.swing.DefaultComboBoxModel;
+
+
 /**
  *
  * @author ASUS
@@ -11,12 +17,68 @@ package GUI.Ejecutables;
 public class Editarvehiculos_JPanel extends javax.swing.JPanel {
 
     private MainFrame mainFrame;
+    private Vehiculo  Vehiculo;
 
     public Editarvehiculos_JPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         initComponents();
+        mostrarCategorias();
+        mostrarEsatados();
+    }
+    
+        private void save(){
+        String placa=txtPlaca.getText();
+        String modelo=txtModelo.getText();
+        Categoria categoria=(Categoria)txtCategoria.getSelectedItem();
+        Estado estado=(Estado)txtEstado1.getSelectedItem();
+        
+        Vehiculo = mainFrame.getVehiculosHashMap().buscar(placa);
+        Vehiculo.setCategoria(categoria);
+        Vehiculo.setEstado(estado);
+        Vehiculo.setModelo(modelo);
+        
+       mainFrame.getBuscarvehiculos_jdialog().cargartabla();
+    }    
+
+    public void remover() {
+        String placa=txtPlaca.getText();
+        Vehiculo = mainFrame.getVehiculosHashMap().buscar(placa);        
+        mainFrame.getVehiculosHashMap().remover(Vehiculo);
+        mainFrame.getBuscarvehiculos_jdialog().cargartabla();
+    }   
+    
+    public Vehiculo getVehiculo() {
+        return Vehiculo;
+    }   
+    
+    private void mostrarEsatados(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for (Estado Estado:Estado.values()){
+            model.addElement(Estado);
+        }
+        txtEstado1.setModel(model);
+    }
+    
+    private void mostrarCategorias(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        for (Categoria categoria:Categoria.values()){
+            model.addElement(categoria);
+        }
+        txtCategoria.setModel(model);
     }
 
+    public void CargarInfoVehiculos() {      
+        Vehiculo = mainFrame.getBuscarvehiculos_jdialog().getVehiculo();
+        txtAño.setText(String.valueOf(Vehiculo.getAño()));
+        txtCategoria.setSelectedItem(Vehiculo.getCategoria());
+        txtEstado1.setSelectedItem(Vehiculo.getEstado());
+        txtMarca.setText(Vehiculo.getMarca());
+        txtModelo.setText(Vehiculo.getModelo());
+        txtPlaca.setText(Vehiculo.getPlaca());
+        jlimagen.setIcon(Vehiculo.getImagen());
+        System.out.println(Vehiculo.getImagen());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,14 +89,42 @@ public class Editarvehiculos_JPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtAño = new javax.swing.JTextField();
+        txtModelo = new javax.swing.JTextField();
+        txtPlaca = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtCategoria = new javax.swing.JComboBox<>();
+        txtEstado1 = new javax.swing.JComboBox<>();
+        jlimagen = new javax.swing.JLabel();
+        Background = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 600));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/Save.png"))); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(60, 60));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 490, -1, 60));
 
         jButton5.setBackground(new java.awt.Color(0, 102, 102));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/New.png"))); // NOI18N
@@ -58,8 +148,130 @@ public class Editarvehiculos_JPanel extends javax.swing.JPanel {
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 490, 60, 60));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/editarVehiculo_Background.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jButton3.setBackground(new java.awt.Color(0, 102, 102));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/mac-trashcan_full-new.png"))); // NOI18N
+        jButton3.setPreferredSize(new java.awt.Dimension(60, 60));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 490, -1, 60));
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/Lock.png"))); // NOI18N
+        jLabel6.setText("Año");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 180, 50, 50));
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/Lock.png"))); // NOI18N
+        jLabel9.setText("Año");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 280, 50, 50));
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Iconos/Lock.png"))); // NOI18N
+        jLabel10.setText("Año");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 180, 50, 50));
+
+        txtAño.setEditable(false);
+        txtAño.setBackground(new java.awt.Color(0, 102, 102));
+        txtAño.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtAño.setForeground(new java.awt.Color(255, 255, 255));
+        txtAño.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAño.setBorder(null);
+        txtAño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAñoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 300, 150, 30));
+
+        txtModelo.setBackground(new java.awt.Color(0, 102, 102));
+        txtModelo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtModelo.setForeground(new java.awt.Color(255, 255, 255));
+        txtModelo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtModelo.setBorder(null);
+        txtModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModeloActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 300, 150, 30));
+
+        txtPlaca.setEditable(false);
+        txtPlaca.setBackground(new java.awt.Color(0, 102, 102));
+        txtPlaca.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtPlaca.setForeground(new java.awt.Color(255, 255, 255));
+        txtPlaca.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPlaca.setBorder(null);
+        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPlacaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 200, 150, 30));
+
+        txtMarca.setEditable(false);
+        txtMarca.setBackground(new java.awt.Color(0, 102, 102));
+        txtMarca.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtMarca.setForeground(new java.awt.Color(255, 255, 255));
+        txtMarca.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMarca.setBorder(null);
+        txtMarca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMarcaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 200, 150, 30));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Placa");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 170, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Marca");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Modelo");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 270, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Estado");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 370, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Categoria");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Año");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 270, -1, -1));
+
+        txtCategoria.setBackground(new java.awt.Color(0, 102, 102));
+        txtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        txtCategoria.setBorder(null);
+        jPanel1.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 400, 150, 30));
+
+        txtEstado1.setBackground(new java.awt.Color(0, 102, 102));
+        txtEstado1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtEstado1.setForeground(new java.awt.Color(255, 255, 255));
+        txtEstado1.setBorder(null);
+        jPanel1.add(txtEstado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 400, 150, 30));
+        jPanel1.add(jlimagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/editarVehiculo_Background.png"))); // NOI18N
+        jPanel1.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         add(jPanel1, "card2");
     }// </editor-fold>//GEN-END:initComponents
@@ -72,11 +284,53 @@ public class Editarvehiculos_JPanel extends javax.swing.JPanel {
         mainFrame.buscar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        remover();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        save();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAñoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAñoActionPerformed
+
+    private void txtModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModeloActionPerformed
+
+    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPlacaActionPerformed
+
+    private void txtMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMarcaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jlimagen;
+    private javax.swing.JTextField txtAño;
+    private javax.swing.JComboBox<String> txtCategoria;
+    private javax.swing.JComboBox<String> txtEstado1;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

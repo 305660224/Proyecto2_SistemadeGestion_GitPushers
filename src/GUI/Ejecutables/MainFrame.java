@@ -17,7 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Bienvenida_JPanel bienvenida_jpanel;
     private Agregarvehiculos_JPanel agregarvehiculos_jpanel;
     private Editarvehiculos_JPanel editarvehiculos_jpanel;
-    private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false);
+    private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false, this);
     private GestionEmpleados gestionEmpleados_jpanel ;
     private TablaEmpleados tablaEmpleados_jpanel;
     
@@ -61,9 +61,9 @@ public class MainFrame extends javax.swing.JFrame {
         buscarvehiculos_jdialog.setVehiculosHashMap(vehiculosHashMap);
         buscarvehiculos_jdialog.setVisible(true);
     }
-
+    
     //GETS
-
+    
     public TablaEmpleados getTablaEmpleados_jpanel() {
         return tablaEmpleados_jpanel;
     }
@@ -91,11 +91,12 @@ public class MainFrame extends javax.swing.JFrame {
     public GestionEmpleados getGestionEmpleados_jpanel() {
         return gestionEmpleados_jpanel;
     }
-    
-    
 
-
+    public Editarvehiculos_JPanel getEditarvehiculos_jpanel() {
+        return editarvehiculos_jpanel;
+    }
     
+        
     //SETS
     
     public void setVehiculosHashMap(VehiculosHashMap vehiculosHashMap) {
