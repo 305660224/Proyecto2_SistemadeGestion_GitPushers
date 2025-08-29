@@ -10,9 +10,9 @@ import Utils.UtilGuis;
 import Utils.UtilsFecha;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
-import GUI.Ejecutables.*;
 import javax.swing.SwingUtilities;
 import java.awt.Frame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,7 +24,6 @@ public class GestionClientes extends javax.swing.JPanel {
     private ClienteArrayList clienteLista;
     private GestionReserva gestionReserva;
 
-    
     public void Agregar() {
         String cedula = txtCedula.getText();
         String nombre = txtNombreCompleto.getText();
@@ -46,14 +45,16 @@ public class GestionClientes extends javax.swing.JPanel {
     private boolean validacionRequerida() {
         return UtilGuis.validateRequiere(txtTipoLicencia, txtCedula, txtNombreCompleto, txtFechaNacimiento, txtTeléfono, txtCorreoElectronico);
     }
+
     private void limpiarCampos() {
-    txtCedula.setValue(null);
-    txtNombreCompleto.setValue(null);
-    txtTeléfono.setValue(null);           
-    txtCorreoElectronico.setValue(null);
-    txtFechaNacimiento.setValue(null);
-    txtTipoLicencia.setSelectedIndex(-1);  // limpia el campo (es d la funcion eliminar)
-}
+        txtCedula.setValue(null);
+        txtNombreCompleto.setValue(null);
+        txtTeléfono.setValue(null);
+        txtCorreoElectronico.setValue(null);
+        txtFechaNacimiento.setValue(null);
+        txtTipoLicencia.setSelectedIndex(-1);  // limpia el campo (es d la funcion eliminar)
+    }
+
     private void Actualizar() {
         if (cliente == null) {
             UtilGuis.showErrorMessage(this, "No se ha seleccionado ningun registro", "Error");
@@ -71,35 +72,61 @@ public class GestionClientes extends javax.swing.JPanel {
     }
 
     private void Buscar() {
+         // obtiene la ventana principal que contiene tu panel
+    java.awt.Frame parent = (java.awt.Frame) javax.swing.SwingUtilities.getWindowAncestor(this);
+
+    // crea y muestra el dialogo
+    TablaBuscarCliente dialog = new TablaBuscarCliente(parent, true);
+    dialog.setListaClientes(clienteLista); // le paso la lista de clientes
+    dialog.setVisible(true);
+
+    // recupera el cliente seleccionado
+    cliente = dialog.getClienteSeleccionado();
+
+    if (cliente != null) {
+        txtCedula.setText(cliente.getCedula());
+        txtNombreCompleto.setText(cliente.getNombre());
+        txtCorreoElectronico.setText(cliente.getCorreo());
+        txtTeléfono.setText(cliente.getTelefono());
+        txtFechaNacimiento.setText(cliente.getFechaNacimiento().toString());
+        txtTipoLicencia.setSelectedItem(cliente.getLicencia());
+    }
 
     }
 
     private void Elimina() {
-     if (cliente == null) {
-        JOptionPane.showMessageDialog(this, 
-            "Debe seleccionar un cliente para eliminar", 
-            "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Debe seleccionar un cliente para eliminar",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    try {
-        clienteLista.eliminarCliente(cliente, gestionReserva);
-        JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente");
-        limpiarCampos();
-        cliente = null;
+        try {
+            clienteLista.eliminarCliente(cliente, gestionReserva);
+            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente");
+            limpiarCampos();
+            cliente = null;
 
-    } catch (ClienteReservaException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (ClienteNoEncontradoException e) {
-        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    
+        } catch (ClienteReservaException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (ClienteNoEncontradoException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     public GestionClientes() {
         initComponents();
-        clienteLista= ClienteArrayList.getInstanciaClientes();
-        this.gestionReserva = GestionReserva.getInstanciaReserva() ;
+        clienteLista = ClienteArrayList.getInstanciaClientes();
+        this.gestionReserva = GestionReserva.getInstanciaReserva();
+
+        // Cargar  el combo 
+        txtTipoLicencia.setModel(new javax.swing.DefaultComboBoxModel<>(
+                java.util.Arrays.stream(Tipo_licencia_Enum.values()).map(Enum::name).toArray(String[]::new)
+        ));
+// Opcional: que arranque sin nada seleccionado
+        txtTipoLicencia.setSelectedIndex(-1);
     }
 
     @SuppressWarnings("unchecked")
@@ -128,7 +155,7 @@ public class GestionClientes extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1000, 600));
         setMinimumSize(new java.awt.Dimension(1000, 600));
@@ -136,10 +163,10 @@ public class GestionClientes extends javax.swing.JPanel {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 204, 51));
         jLabel2.setText("Gestión cliente");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 13, 300, 80));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Agregar cliente1.png"))); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,17 +179,17 @@ public class GestionClientes extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 204, 51));
         jLabel3.setText("Cedúla");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 204, 51));
         jLabel4.setText("Fecha de nacimiento");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 204, 51));
         jLabel5.setText("Teléfono");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 204, 51));
@@ -172,37 +199,37 @@ public class GestionClientes extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 204, 51));
         jLabel7.setText("Tipo de licencia");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 204, 51));
         jLabel8.setText("Nombre");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
 
-        jPanel1.add(txtTipoLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, 190, 40));
+        jPanel1.add(txtTipoLicencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 190, 40));
 
         txtFechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd MM YYYY"))));
-        jPanel1.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 210, 40));
+        jPanel1.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 210, 40));
 
         txtNombreCompleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreCompletoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 170, 40));
+        jPanel1.add(txtNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 170, 40));
 
         txtCedula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#########"))));
-        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 150, 40));
+        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 150, 40));
 
         txtCorreoElectronico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoElectronicoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 292, 200, 40));
+        jPanel1.add(txtCorreoElectronico, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 200, 40));
 
         txtTeléfono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("########"))));
-        jPanel1.add(txtTeléfono, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 140, 40));
+        jPanel1.add(txtTeléfono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 140, 40));
 
         btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/actualizar2.png"))); // NOI18N
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +237,7 @@ public class GestionClientes extends javax.swing.JPanel {
                 btnActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, -1, 80));
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, -1, 80));
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/lupa1.jpg"))); // NOI18N
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +245,7 @@ public class GestionClientes extends javax.swing.JPanel {
                 btnBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 420, -1, 80));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, -1, 80));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/Eliminar1.png"))); // NOI18N
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -226,46 +253,45 @@ public class GestionClientes extends javax.swing.JPanel {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 420, -1, -1));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 420, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 204, 51));
         jLabel9.setText("Actualizar");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 204, 51));
         jLabel10.setText("Buscar");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 500, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 204, 51));
         jLabel11.setText("Eliminar");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 500, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 510, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 204, 51));
         jLabel12.setText("Correo");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, -1, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/cliente_1.jpg"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 540));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Imagenes/cliente33.jpg"))); // NOI18N
+        jLabel13.setText("jLabel13");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1061, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -286,7 +312,7 @@ public class GestionClientes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        Buscar();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -299,10 +325,10 @@ public class GestionClientes extends javax.swing.JPanel {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

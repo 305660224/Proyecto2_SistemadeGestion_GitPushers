@@ -13,9 +13,6 @@ public class Cliente extends Persona{
      
      private Tipo_licencia_Enum licencia;
 
-    public Cliente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     public Tipo_licencia_Enum getLicencia() {
         return licencia;

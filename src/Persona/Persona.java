@@ -52,8 +52,9 @@ public abstract class Persona {
 
     public void setCorreo(String correo) {
         if (correo == null || !correo.matches("^[\\w+.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-            this.correo = correo;
+          throw new IllegalArgumentException("Correo inválido");
         }
+          this.correo = correo;
     }
 
     //validacines D.
@@ -80,6 +81,5 @@ public abstract class Persona {
         this.telefono = telefono;
         this.correo = correo;
     }
-     public Persona() {
-    };
+     
 }
