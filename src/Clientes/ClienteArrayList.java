@@ -75,11 +75,11 @@ public class ClienteArrayList implements List<Cliente> {
     
     public Cliente buscarXcedula(String cedula) {
         // Busca al cliente por su cedula
-        for (Cliente cli : losClientes) {
-            if (cli.getCedula()==cedula) {
-                return cli;
-            }
+    for (Cliente cli : losClientes) {
+        if (cli.getCedula().equals(cedula)) {
+            return cli;
         }
+    }
         return null; // Si no lo encuentra
     }
 

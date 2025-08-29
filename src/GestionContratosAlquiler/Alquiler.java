@@ -29,7 +29,7 @@ public class Alquiler {
       this.numeroAlquiler = numeroAlquiler;
         this.cliente = cliente;
         this.vehiculo = vehiculo;
-        if(fechaInicio.isAfter(fechaInicio)){
+        if(fechaInicio.isAfter(LocalDate.now())){
             this.fechaInicio = fechaInicio;
         }else{
             throw new IllegalArgumentException("La fecha de inicio no puede estar en el pasado.");
@@ -88,4 +88,11 @@ public class Alquiler {
     public EstadoContrato getEstado() {
         return estado;
     }  
+
+    @Override
+    public String toString() {
+        return "Alquiler{" + "numeroAlquiler=" + numeroAlquiler + ", cliente=" + cliente + ", vehiculo=" + vehiculo + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", monto=" + monto + ", estado=" + estado + '}';
+    }
+    
+    
 }

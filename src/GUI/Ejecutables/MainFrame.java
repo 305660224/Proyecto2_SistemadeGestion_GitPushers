@@ -1,6 +1,8 @@
 package GUI.Ejecutables;
 
 import GUI.Ejecutables.Buscarvehiculos_JDialog;
+import GestionContratosAlquiler.Alquiler;
+import GestionContratosAlquiler.GestionAlquiler;
 import Logico.Vehiculos.*;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -30,7 +32,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private VehiculosHashMap vehiculosHashMap;
     private Vehiculo vehiculo;
-
+    private Alquiler contrato;
+    private GestionAlquiler Contratoslista;
+    
+    
     /**
      * Creates new form MainFrame
      */
@@ -42,7 +47,9 @@ public class MainFrame extends javax.swing.JFrame {
         Actual_JPanel.setLayout(cardlayout);
 
         vehiculosHashMap = new VehiculosHashMap();
-    vehiculo=null;    
+    vehiculo=null;  
+        Contratoslista = new GestionAlquiler();
+    contrato=null;
 
         //inicializar instancia Jpanels/JDiaogs    
         bienvenida_jpanel = new Bienvenida_JPanel();
@@ -72,8 +79,16 @@ public class MainFrame extends javax.swing.JFrame {
         buscarvehiculos_jdialog.setVisible(true);
     }
     
-    //GETS
-    
+    //GETS}
+
+    public Alquiler getContrato() {
+        return contrato;
+    }
+
+    public GestionAlquiler getContratoslista() {
+        return Contratoslista;
+    }
+       
     public TablaEmpleados getTablaEmpleados_jpanel() {
         return tablaEmpleados_jpanel;
     }
@@ -121,6 +136,13 @@ public class MainFrame extends javax.swing.JFrame {
         this.vehiculo = vehiculo;
     }
 
+    public void setContrato(Alquiler contrato) {
+        this.contrato = contrato;
+    }
+
+    public void setContratoslista(GestionAlquiler Contratoslista) {
+        this.Contratoslista = Contratoslista;
+    }
     
     
 

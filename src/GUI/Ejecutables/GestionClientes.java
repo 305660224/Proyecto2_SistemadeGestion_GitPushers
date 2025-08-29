@@ -83,6 +83,7 @@ public class GestionClientes extends javax.swing.JPanel {
 
     private void Buscar() {
     // crea y muestra el dialogo
+        System.out.println(clienteLista.getClientes().toString());
     TablaBuscarCliente dialog = new TablaBuscarCliente(this.mainFrame, true);
     dialog.setListaClientes(clienteLista); // le paso la lista de clientes
     dialog.setVisible(true);
