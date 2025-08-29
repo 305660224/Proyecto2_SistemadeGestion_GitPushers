@@ -146,6 +146,7 @@ public class GestionContratos extends javax.swing.JPanel {
         txtClienteNombre.setEditable(false);
         txtClienteNombre.setBackground(new java.awt.Color(0, 102, 102));
         txtClienteNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtClienteNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtClienteNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtClienteNombre.setBorder(null);
         txtClienteNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +265,7 @@ public class GestionContratos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtVehiculoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+    mainFrame.buscarContratos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
