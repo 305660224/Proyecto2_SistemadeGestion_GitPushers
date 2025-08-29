@@ -20,10 +20,16 @@ public class GestionEmpleados extends javax.swing.JPanel {
     private Empleado empleado;
     private GestorEmpleados gestorEmpleados;
     private DefaultTableModel model;
+    private MainFrame mainFrame;
 
-    public GestionEmpleados() {
+    public GestionEmpleados(MainFrame aThis) {
+         this.mainFrame = mainFrame;
         initComponents();
     }
+
+    ///GestionEmpleados(MainFrame aThis) {
+      // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   // }
 
     private void clear() {
         txtCedula.setText("");

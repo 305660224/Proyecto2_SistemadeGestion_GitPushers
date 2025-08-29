@@ -18,6 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     private Agregarvehiculos_JPanel agregarvehiculos_jpanel;
     private Editarvehiculos_JPanel editarvehiculos_jpanel;
     private Buscarvehiculos_JDialog buscarvehiculos_jdialog = new Buscarvehiculos_JDialog(this, false);
+    private GestionEmpleados gestionEmpleados_jpanel;
     
     //Crear instancias de listas y/o objetos
     private CardLayout cardlayout;
@@ -42,11 +43,13 @@ public class MainFrame extends javax.swing.JFrame {
     bienvenida_jpanel = new Bienvenida_JPanel();
     agregarvehiculos_jpanel = new Agregarvehiculos_JPanel(this);    
     editarvehiculos_jpanel = new Editarvehiculos_JPanel(this);
+    gestionEmpleados_jpanel = new GestionEmpleados(this);
     
     //Agregar los JPanels al JPanel contenedor
     Actual_JPanel.add(bienvenida_jpanel, "bienvenida");   
     Actual_JPanel.add(agregarvehiculos_jpanel, "agregarvehiculos");   
-    Actual_JPanel.add(editarvehiculos_jpanel, "editarvehiculos");        
+    Actual_JPanel.add(editarvehiculos_jpanel, "editarvehiculos");    
+    Actual_JPanel.add(gestionEmpleados_jpanel,"gestionempleados");
     
     }
     
@@ -76,6 +79,9 @@ public class MainFrame extends javax.swing.JFrame {
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
+
+
+    
     //SETS
     
     public void setVehiculosHashMap(VehiculosHashMap vehiculosHashMap) {
@@ -101,6 +107,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
@@ -160,6 +167,15 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Empleados");
+
+        jMenuItem4.setText("Agregar Empleado");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Reservas");
@@ -184,6 +200,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
     buscar();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       cardlayout.show(Actual_JPanel, "gestionempleados");
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -215,5 +235,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     // End of variables declaration//GEN-END:variables
 }
