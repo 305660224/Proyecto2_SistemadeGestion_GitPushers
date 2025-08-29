@@ -23,7 +23,7 @@ public class GestionEmpleados extends javax.swing.JPanel {
     private MainFrame mainFrame;
 
     public GestionEmpleados(MainFrame mainFrame) {
-        gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
+        gestorEmpleados = new GestorEmpleados();
         this.mainFrame = mainFrame;
         initComponents();
     }
@@ -56,13 +56,11 @@ public class GestionEmpleados extends javax.swing.JPanel {
     }
 
     private void search() {
-        TablaEmpleados frm = new TablaEmpleados();
-
-        frm.setGestorEmpleados(gestorEmpleados);
-        frm.loadTable();
+        mainFrame.getTablaEmpleados_jpanel().setGestorEmpleados(gestorEmpleados);
+        mainFrame.getTablaEmpleados_jpanel().loadTable();
         mainFrame.getCardlayout().show(mainFrame.getActual_JPanel(), "tablaEmpleados_jpanel");
 
-        empleado = frm.getEmpleado();
+        empleado = mainFrame.getTablaEmpleados_jpanel().getEmpleado();
 
         if (empleado == null) {
             clear();

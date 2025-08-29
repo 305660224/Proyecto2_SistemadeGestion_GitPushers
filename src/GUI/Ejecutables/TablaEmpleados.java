@@ -20,6 +20,7 @@ public class TablaEmpleados extends javax.swing.JPanel {
 
     private Empleado empleado;
     private GestorEmpleados gestorEmpleados;
+    private DefaultTableModel model;
     private TableRowSorter<DefaultTableModel> sorter;
     private RowFilter<DefaultTableModel, Object> RowFilter;
 
@@ -35,21 +36,17 @@ public class TablaEmpleados extends javax.swing.JPanel {
      * Creates new form TablaEmpleados
      */
     public TablaEmpleados() {
-        gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
         initComponents();
+        gestorEmpleados = GestorEmpleados.getInstanciaEmpleados();
+        model= (DefaultTableModel) tblEmpleados.getModel();        
     }
 
     public void loadTable() {
-        DefaultTableModel model = (DefaultTableModel) tblEmpleados.getModel();
-        model.setRowCount(0);
-        for (Empleado emp : gestorEmpleados.getListaEmpleados()) {
-            Object[] row = {
-                emp.getCedula(), emp.getNombre(),
-                UtilsFecha.toString(emp.getFechaNacimiento()),
-                emp.getTelefono(), emp.getCorreo(),
-                emp.getPuesto(), emp.getSalario()
-            };
-            model.addRow(row);
+        model.setRowCount(0); //Limpia la tabla
+        for (Empleado empleado : gestorEmpleados.getListaEmpleados()) {
+            System.out.println(gestorEmpleados.getListaEmpleados());
+            Object[] data = {empleado.getCedula(), empleado.getNombre()}; 
+            model.addRow(data);
         }
     }
 
@@ -98,16 +95,9 @@ public class TablaEmpleados extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tblEmpleados);

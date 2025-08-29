@@ -64,6 +64,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     //GETS
 
+    public TablaEmpleados getTablaEmpleados_jpanel() {
+        return tablaEmpleados_jpanel;
+    }
+    
     public Buscarvehiculos_JDialog getBuscarvehiculos_jdialog() {
         return buscarvehiculos_jdialog;
     }
